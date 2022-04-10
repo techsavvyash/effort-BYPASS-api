@@ -1,0 +1,30 @@
+{
+  "name": "effort-bypass-api",
+  "version": "1.0.0",
+  "description": "API for the effort-BYPASS exCalibur project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/techsavvyash/effort-BYPASS-api.git"
+  },
+  "author": "Status-200",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/techsavvyash/effort-BYPASS-api/issues"
+  },
+  "homepage": "https://github.com/techsavvyash/effort-BYPASS-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.2.10"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
