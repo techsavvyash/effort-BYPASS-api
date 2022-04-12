@@ -1,15 +1,25 @@
 const Question = require("../models/Question");
 
 exports.postQuestion = async (req, res, next) => {
-  const { id, description, timeConstraint, memoryConstraints, submissions } =
-    req.body;
+  const {
+    id,
+    description,
+    timeConstraints,
+    memoryConstraints,
+    submissions,
+    title,
+    topic,
+    visibility,
+  } = req.body;
 
   if (
     !id ||
     !description ||
-    !timeConstraint ||
+    !timeConstraints ||
     !memoryConstraints ||
-    !submissions
+    !title ||
+    !topic ||
+    !visibility
   ) {
     res.status(401).send({ message: "Invalid details", status: false });
     return;
@@ -18,10 +28,13 @@ exports.postQuestion = async (req, res, next) => {
   try {
     const question = await Question.create({
       id,
-      descriptionm,
-      timeConstraint,
+      description,
+      timeConstraints,
       memoryConstraints,
       submissions,
+      title,
+      topic,
+      visibility,
     });
     res.send({
       message: `Question added successfully with questionID: ${question.id}`,
@@ -35,8 +48,22 @@ exports.postQuestion = async (req, res, next) => {
 
 exports.getQuestions = async (req, res, next) => {
   try {
-    const questions = Question.find({});
+    const questions = await Question.find({});
     res.status(200).send({ message: questions, status: true });
+  } catch (err) {
+    console.error("Error: ", err);
+    res.status(500).send({ message: "Internal Server Error", status: false });
+  }
+};
+
+exports.getQuestionDetails = async (req, res, next) => {
+  const quesId = req.params.id;
+  try {
+    const ques = await Question.findOne({ id: quesId });
+    if (!ques) {
+      res.status(404).send({ message: "Not Found", status: false });
+    }
+    res.status(200).send({ message: ques, status: true });
   } catch (err) {
     console.error("Error: ", err);
     res.status(500).send({ message: "Internal Server Error", status: false });

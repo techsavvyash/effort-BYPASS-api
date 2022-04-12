@@ -8,10 +8,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: [true, "ID is required"],
     },
-    username: {
-      type: String,
-      required: [true, "username is required"],
-    },
+    // username: {
+    //   type: String,
+    //   required: [true, "username is required"],
+    // },
     name: {
       type: String,
       required: [true, "Name is required"],

@@ -22,7 +22,7 @@ exports.getContests = async (req, res, next) => {
 };
 
 exports.getContestDetails = async (req, res, next) => {
-  const contestId = req.query.id;
+  const contestId = req.params.id;
   try {
     const contest = await Contest.findOne({ id: contestId });
     if (!contest) {

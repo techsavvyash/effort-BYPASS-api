@@ -42,10 +42,10 @@ app.get("/", (req, res, next) => {
 
 //routes
 app.use(require("./routes/auth"));
-app.use(require("./routes/ques"));
+app.use(require("./routes/submission"));
 app.use(require("./routes/contest"));
 app.use(require("./routes/questions"));
 
-app.listen(process.env.PORT || 5454, () => {
-  console.log(`server started at http://localhost:${process.env.PORT || 5454}`);
+app.listen(process.env.PORT || 8000, () => {
+  console.log(`server started at http://localhost:${process.env.PORT || 8000}`);
 });

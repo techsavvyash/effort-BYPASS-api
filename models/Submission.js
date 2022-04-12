@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { ForeignKeyHelper } = require("../util/helpers");
 const Question = require("./Question");
+const User = require("./User");
 
 const SubmissionSchema = mongoose.Schema(
   {
@@ -31,6 +32,18 @@ const SubmissionSchema = mongoose.Schema(
     progLang: {
       type: String,
       required: [true, "Programming language of the submission is required!"],
+    },
+    submittedBy: {
+      type: mongoose.Types.ObjectId,
+      required: [true, "User id for the submitting user is required"],
+      ref: "User",
+      validate: {
+        isAsync: true,
+        validator: function (v) {
+          return ForeignKeyHelper(User, v);
+        },
+        message: `User doesn't exist`,
+      },
     },
   },
   {

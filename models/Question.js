@@ -9,14 +9,14 @@ const QuestionSchema = mongoose.Schema(
     },
     title: {
       type: String,
-      required: [true, "Title of the Contest is required"],
+      required: [true, "Title of the question is required"],
     },
     description: {
       type: String,
       required: [true, "Description is required"],
     },
     timeConstraints: {
-      type: String,
+      type: Number,
       required: [true, "time Constraints on the questions are required"],
     },
     memoryConstraints: {
