@@ -24,6 +24,14 @@ const SubmissionSchema = mongoose.Schema(
       type: String,
       required: [true, "Status corresponding a solution is required"],
     },
+    code: {
+      type: String,
+      required: [true, "Code corresponding the submission is required"],
+    },
+    progLang: {
+      type: String,
+      required: [true, "Programming language of the submission is required!"],
+    },
   },
   {
     collection: "Submission",

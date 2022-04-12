@@ -1,3 +1,6 @@
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 exports.ForeignKeyHelper = (model, id) => {
   return new Promise((resolve, reject) => {
     model.findOne({ _id: id }, (err, result) => {
@@ -10,5 +13,12 @@ exports.ForeignKeyHelper = (model, id) => {
           )
         );
     });
+  });
+};
+
+exports.generateJWT = (username) => {
+  //the jwt contains the username and expires in 500 minutes
+  return jwt.sign({ username }, process.env.JWT_SECRET, {
+    expiresIn: 500 * 60 * 1000,
   });
 };

@@ -7,6 +7,10 @@ const QuestionSchema = mongoose.Schema(
       type: String,
       required: [true, "ID is required"],
     },
+    title: {
+      type: String,
+      required: [true, "Title of the Contest is required"],
+    },
     description: {
       type: String,
       required: [true, "Description is required"],
@@ -32,6 +36,16 @@ const QuestionSchema = mongoose.Schema(
         },
       },
     ],
+    topic: [
+      {
+        type: String,
+        required: [true, "Question Topics are required!"],
+      },
+    ],
+    visibility: {
+      type: Boolean,
+      required: [true, "Visibility of the question is necessary"],
+    },
   },
   {
     collection: "Question",
