@@ -1,5 +1,7 @@
+const bcrypt = require("bcryptjs/dist/bcrypt");
 const User = require("../models/User");
 const { generateJWT } = require("../util/helpers");
+const bcrypt = require("bcryptjs");
 
 exports.login = async (req, res, next) => {
   const { id, password } = req.body;
@@ -14,6 +16,8 @@ exports.login = async (req, res, next) => {
     return;
   }
 
+  const salt = await bcrypt.genSalt(10);
+  password = await bcrypt.hash(password, salt);
   if (password === user.password) {
     req.session.id = generateJWT(user.id);
     req.session.roles = user.roles;
@@ -31,10 +35,21 @@ exports.signup = async (req, res, next) => {
     return;
   }
   try {
+    const salt = await bcrypt.genSalt(10);
+    password = await bcrypt.hash(password, salt);
     const user = await User.create({ id, name, password, roles });
-    res.send({ message: "User created Successfully", status: true });
+    res.send({
+      message: "User created Successfully, proceed to login",
+      user: user,
+      status: true,
+    });
   } catch (err) {
     console.log("Error: ", err);
     res.staus(500).send({ message: "Internal Server Error", status: false });
   }
+};
+
+exports.logout = async (req, res, next) => {
+  req.session = {};
+  res.send({ message: "User logout successful", status: true });
 };

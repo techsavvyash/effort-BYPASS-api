@@ -10,6 +10,9 @@ exports.postQuestion = async (req, res, next) => {
     title,
     topic,
     visibility,
+    SPOJId,
+    comments,
+    solutions,
   } = req.body;
 
   if (
@@ -35,6 +38,9 @@ exports.postQuestion = async (req, res, next) => {
       title,
       topic,
       visibility,
+      SPOJId,
+      comments,
+      solutions,
     });
     res.send({
       message: `Question added successfully with questionID: ${question.id}`,
@@ -67,5 +73,50 @@ exports.getQuestionDetails = async (req, res, next) => {
   } catch (err) {
     console.error("Error: ", err);
     res.status(500).send({ message: "Internal Server Error", status: false });
+  }
+};
+
+exports.updateQuestion = async (req, res, next) => {
+  const {
+    questionId,
+    id,
+    title,
+    description,
+    timeConstraints,
+    memoryConstraints,
+    submissions,
+    topic,
+    visibility,
+    SPOJId,
+    comments,
+    solutions,
+  } = req.body;
+
+  if (!questionId) {
+    res.send({ message: "Invalid request", status: false });
+    return;
+  }
+
+  try {
+    await Question.findByIdAndUpdate(questionId, {
+      id: id,
+      title: title,
+      memoryConstraints: memoryConstraints,
+      submissions: submissions,
+      topic: topic,
+      visibility: visibility,
+      SPOJId: SPOJId,
+      comments: comments,
+      solutions: solutions,
+      description: description,
+      timeConstraints: timeConstraints,
+    });
+
+    res
+      .send({ message: "Question updated successfully", status: true })
+      .status(200);
+  } catch (err) {
+    console.log("Error: ", err);
+    res.send({ message: "Internal Server Error", status: false }).status(500);
   }
 };

@@ -1,4 +1,4 @@
-const express = require("express");
+const expr0ess = require("express");
 const app = express();
 const cors = require("cors");
 const session = require("express-session");
@@ -6,7 +6,7 @@ const session = require("express-session");
 const connectToDB = require("./config/db");
 
 require("dotenv").config();
-
+// const http = require("http").createServer(app)
 connectToDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -45,6 +45,8 @@ app.use(require("./routes/auth"));
 app.use(require("./routes/submission"));
 app.use(require("./routes/contest"));
 app.use(require("./routes/questions"));
+app.use(require("./routes/solution"));
+app.use(require("./routes/comment"));
 
 app.listen(process.env.PORT || 8000, () => {
   console.log(`server started at http://localhost:${process.env.PORT || 8000}`);

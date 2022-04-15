@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { ForeignKeyHelper } = require("../util/helpers");
+const Solution = require("./Solution");
+const Submission = require("./Submission");
 
 const QuestionSchema = mongoose.Schema(
   {
@@ -30,7 +32,7 @@ const QuestionSchema = mongoose.Schema(
         validate: {
           isAsync: true,
           validator: function (v) {
-            return ForeignKeyHelper(submissions, v);
+            return ForeignKeyHelper(Submission, v);
           },
           message: `Submission doesn't exist`,
         },
@@ -46,6 +48,35 @@ const QuestionSchema = mongoose.Schema(
       type: Boolean,
       required: [true, "Visibility of the question is necessary"],
     },
+    SPOJId: {
+      type: String,
+    },
+    comments: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Comments",
+        validate: {
+          isAsync: true,
+          validator: function (v) {
+            return ForeignKeyHelper(Comment, v);
+          },
+          message: `Comment doesn't exist`,
+        },
+      },
+    ],
+    solutions: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Solution",
+        validate: {
+          isAsync: true,
+          validator: function (v) {
+            return ForeignKeyHelper(Solution, v);
+          },
+          message: `Submission doesn't exist`,
+        },
+      },
+    ],
   },
   {
     collection: "Question",

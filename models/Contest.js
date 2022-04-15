@@ -55,6 +55,10 @@ const ContestSchema = mongoose.Schema(
       type: Date,
       required: [true, "Schedule of the contest is required"],
     },
+    restricted: {
+      type: String,
+      required: [true, "Restriction status of the contest is required"],
+    },
   },
   {
     collection: "Contest",
