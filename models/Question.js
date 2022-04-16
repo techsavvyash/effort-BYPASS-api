@@ -25,6 +25,11 @@ const QuestionSchema = mongoose.Schema(
       type: Number,
       required: [true, "Memory Constraints are required!"],
     },
+    testCases: {
+      type: String,
+      required: [true, "Test Cases are required"],
+    },
+
     submissions: [
       {
         type: mongoose.Types.ObjectId,
@@ -47,9 +52,6 @@ const QuestionSchema = mongoose.Schema(
     visibility: {
       type: Boolean,
       required: [true, "Visibility of the question is necessary"],
-    },
-    SPOJId: {
-      type: String,
     },
     comments: [
       {

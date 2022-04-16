@@ -9,7 +9,7 @@ const connectToDB = require("./config/db.js");
 // import { connectToDB } from "./config/db.js";
 // const { Axios } = require("axios");
 // import axios from "axios";
-// const axios = require("axios").default;
+const axios = require("axios").default;
 const request = require("request");
 const { response } = require("./routes/comment");
 require("dotenv").config();
@@ -54,25 +54,13 @@ app.use(require("./routes/contest"));
 app.use(require("./routes/questions"));
 app.use(require("./routes/solution"));
 app.use(require("./routes/comment"));
+app.use(require("./routes/compile"));
 
 app.listen(process.env.PORT || 8000, () => {
   console.log(`server started at http://localhost:${process.env.PORT || 8000}`);
-  // Axios({
-  //   method: "GET",
-  //   url: `https://${process.env.SPOJ_PROBLEMS_ENDPOINT}/api/v4/test?access_token=${process.env.SPOJ_PROBLEMS_ACCESS_TOKEN}`,
-  // }).then((res) => {
-  //   console.log(res.data);
-  // });
-
-  // Axios({
-  //   method: "GET",
-  //   url: `https://${process.env.SPOJ_COMPILER_ENDPOINT}/api/v4/test?access_token=${process.env.SPOJ_COMPILER_ACCESS_TOKEN}`,
-  // }).then((res) => {
-  //   console.log(res.data);
-  // });
   request(
     {
-      url: `${process.env.SPOJ_PROBLEMS_ENDPOINT}/api/v4/test?access_token=${process.env.SPOJ_PROBLEMS_ACCESS_TOKEN}`,
+      url: `${process.env.SPOJ_PROBLEMS_ENDPOINT}/test?access_token=${process.env.SPOJ_PROBLEMS_ACCESS_TOKEN}`,
       method: "GET",
     },
     (err, res, body) => {
@@ -81,6 +69,31 @@ app.listen(process.env.PORT || 8000, () => {
       }
 
       if (res) {
+        //console.log("res: ", res);
+        //console.log("body: ", body);
+        if (res.statusCode === 200) {
+          console.log(JSON.parse(res.body)); // test message in JSON
+        } else {
+          if (res.statusCode === 401) {
+            console.log("Invalid access token");
+          }
+        }
+      }
+    }
+  );
+  request(
+    {
+      url: `${process.env.SPOJ_COMPILER_ENDPOINT}/test?access_token=${process.env.SPOJ_COMPILER_ACCESS_TOKEN}`,
+      method: "GET",
+    },
+    (err, res, body) => {
+      if (err) {
+        console.log("Connection Problem: ", err);
+      }
+
+      if (res) {
+        //console.log("res: ", res);
+        //console.log("body: ", body);
         if (res.statusCode === 200) {
           console.log(JSON.parse(res.body)); // test message in JSON
         } else {
