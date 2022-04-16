@@ -12,7 +12,7 @@ const CommentSchema = mongoose.Schema(
     },
     entityId: {
       type: mongoose.Types.ObjectId,
-      ref: ["Question", "Solution"],
+      ref: "Question",
     },
     entity: {
       type: String,

@@ -1,10 +1,17 @@
-const expr0ess = require("express");
+const express = require("express");
+// import express from "express";
 const app = express();
 const cors = require("cors");
+// import cors from "cors";
 const session = require("express-session");
-
-const connectToDB = require("./config/db");
-
+// import session from "express-session";
+const connectToDB = require("./config/db.js");
+// import { connectToDB } from "./config/db.js";
+// const { Axios } = require("axios");
+// import axios from "axios";
+// const axios = require("axios").default;
+const request = require("request");
+const { response } = require("./routes/comment");
 require("dotenv").config();
 // const http = require("http").createServer(app)
 connectToDB();
@@ -50,4 +57,38 @@ app.use(require("./routes/comment"));
 
 app.listen(process.env.PORT || 8000, () => {
   console.log(`server started at http://localhost:${process.env.PORT || 8000}`);
+  // Axios({
+  //   method: "GET",
+  //   url: `https://${process.env.SPOJ_PROBLEMS_ENDPOINT}/api/v4/test?access_token=${process.env.SPOJ_PROBLEMS_ACCESS_TOKEN}`,
+  // }).then((res) => {
+  //   console.log(res.data);
+  // });
+
+  // Axios({
+  //   method: "GET",
+  //   url: `https://${process.env.SPOJ_COMPILER_ENDPOINT}/api/v4/test?access_token=${process.env.SPOJ_COMPILER_ACCESS_TOKEN}`,
+  // }).then((res) => {
+  //   console.log(res.data);
+  // });
+  request(
+    {
+      url: `${process.env.SPOJ_PROBLEMS_ENDPOINT}/api/v4/test?access_token=${process.env.SPOJ_PROBLEMS_ACCESS_TOKEN}`,
+      method: "GET",
+    },
+    (err, res, body) => {
+      if (err) {
+        console.log("Connection Problem: ", err);
+      }
+
+      if (res) {
+        if (res.statusCode === 200) {
+          console.log(JSON.parse(res.body)); // test message in JSON
+        } else {
+          if (res.statusCode === 401) {
+            console.log("Invalid access token");
+          }
+        }
+      }
+    }
+  );
 });

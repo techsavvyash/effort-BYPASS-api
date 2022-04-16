@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs/dist/bcrypt");
 const User = require("../models/User");
 const { generateJWT } = require("../util/helpers");
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcrypt");
 
 exports.login = async (req, res, next) => {
   const { id, password } = req.body;
