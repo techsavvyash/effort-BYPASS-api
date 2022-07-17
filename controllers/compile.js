@@ -90,7 +90,11 @@ exports.getCompiledOutput = async (req, res, next) => {
               switch (body.result.status.code) {
                 case 11:
                   res
-                    .send({ message: "Compilation Error", status: true })
+                    .send({
+                      message: "Compilation Error",
+                      body: body,
+                      status: true,
+                    })
                     .status(200);
                   break;
                 case 12:
