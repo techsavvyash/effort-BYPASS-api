@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const Question = require("./Question");
 const User = require("./User");
 
-const ContestSchema = mongoose.Schema(
+const 
+ContestSchema = mongoose.Schema(
   {
     id: {
       type: String,
